@@ -11,7 +11,7 @@ namespace MoqProWinUi
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new StartupForm());
+            Application.Run(new MainForm());
         }
     }
 }

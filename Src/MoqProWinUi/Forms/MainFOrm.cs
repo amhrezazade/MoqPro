@@ -4,31 +4,26 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MoqProWinUi.Forms
 {
-    public partial class MainFOrm : Form
+    public partial class MainForm : Form
     {
-        private HttpListener? _listener;
-        private CancellationTokenSource? _cts;
-
-
-        public MainFOrm()
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        private void MainFOrm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-
+            StartupForm startupForm = new StartupForm();
+            startupForm.ShowDialog();         
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            Text = "MOQ PRO version " + fvi.FileVersion;
         }
-
-
-
-
     }
 }
