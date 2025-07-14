@@ -2,18 +2,8 @@
 
 public class DataType
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
-    public bool IsList { get; set; }
-    public DataTypeNature Nature { get; set; }
-    public int? ReferenceId { get; set; }
-}
-
-public enum DataTypeNature
-{
-    String,
-    Int,
-    Double,
-    DateTime,
-    Object
+    public string Description { get; set; }
+    public List<DataTypeProperty> Properties { get; set; }
 }
