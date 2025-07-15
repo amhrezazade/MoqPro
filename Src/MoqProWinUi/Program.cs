@@ -1,3 +1,4 @@
+using GettingStarted1;
 using MoqProWinUi.Forms;
 
 namespace MoqProWinUi
@@ -11,7 +12,7 @@ namespace MoqProWinUi
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            Application.Run(new Form1());
         }
     }
 }

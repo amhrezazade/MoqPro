@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BrightIdeasSoftware;
+using MoqProDomain.Entity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,10 +22,29 @@ namespace MoqProWinUi.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             StartupForm startupForm = new StartupForm();
-            startupForm.ShowDialog();         
+            //startupForm.ShowDialog();         
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
             Text = "MOQ PRO version " + fvi.FileVersion;
+
+            ObjectListView objectListView = new ObjectListView();
+            objectListView.Size = new Size(400, 400);
+
+            var moq = DataType.GetMOQ();
+            
+            OLVColumn nameColumn = new OLVColumn();
+            objectListView.AllColumns.Add(nameColumn);
+            ((ISupportInitialize)(objectListView)).BeginInit();
+            objectListView.Columns.AddRange([
+                nameColumn,
+            ]);
+            objectListView.SetObjects(moq.Select(x => new
+            {
+                x.Name
+            }));
+
+
+            typeTab.Controls.Add(objectListView);
         }
     }
 }
