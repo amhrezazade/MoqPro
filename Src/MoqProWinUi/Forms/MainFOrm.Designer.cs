@@ -31,15 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tab = new TabControl();
             equestTab = new TabPage();
-            textBox1 = new TextBox();
-            label1 = new Label();
-            requestList = new ListBox();
             typeTab = new TabPage();
-            tyoeList = new ListBox();
+            typeMainPanel = new Panel();
+            typePanel = new Panel();
             serverTab = new TabPage();
+            btnAddType = new Button();
+            btnUpdateType = new Button();
+            btnRemoveType = new Button();
             tab.SuspendLayout();
-            equestTab.SuspendLayout();
             typeTab.SuspendLayout();
+            typePanel.SuspendLayout();
             SuspendLayout();
             // 
             // tab
@@ -47,101 +48,102 @@
             tab.Controls.Add(equestTab);
             tab.Controls.Add(typeTab);
             tab.Controls.Add(serverTab);
-            tab.Location = new Point(10, 9);
-            tab.Margin = new Padding(3, 2, 3, 2);
+            tab.Location = new Point(11, 12);
             tab.Name = "tab";
             tab.SelectedIndex = 0;
-            tab.Size = new Size(829, 426);
+            tab.Size = new Size(947, 568);
             tab.TabIndex = 0;
             // 
             // equestTab
             // 
-            equestTab.Controls.Add(textBox1);
-            equestTab.Controls.Add(label1);
-            equestTab.Controls.Add(requestList);
-            equestTab.Location = new Point(4, 24);
-            equestTab.Margin = new Padding(3, 2, 3, 2);
+            equestTab.Location = new Point(4, 29);
             equestTab.Name = "equestTab";
-            equestTab.Padding = new Padding(3, 2, 3, 2);
-            equestTab.Size = new Size(821, 398);
+            equestTab.Padding = new Padding(3);
+            equestTab.Size = new Size(939, 535);
             equestTab.TabIndex = 0;
             equestTab.Text = "Requests";
             equestTab.UseVisualStyleBackColor = true;
             // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(341, 4);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(467, 23);
-            textBox1.TabIndex = 2;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(304, 6);
-            label1.Name = "label1";
-            label1.Size = new Size(31, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Path";
-            // 
-            // requestList
-            // 
-            requestList.FormattingEnabled = true;
-            requestList.ItemHeight = 15;
-            requestList.Location = new Point(5, 4);
-            requestList.Margin = new Padding(3, 2, 3, 2);
-            requestList.Name = "requestList";
-            requestList.Size = new Size(285, 394);
-            requestList.TabIndex = 0;
-            // 
             // typeTab
             // 
-            typeTab.Controls.Add(tyoeList);
-            typeTab.Location = new Point(4, 24);
-            typeTab.Margin = new Padding(3, 2, 3, 2);
+            typeTab.Controls.Add(typeMainPanel);
+            typeTab.Controls.Add(typePanel);
+            typeTab.Location = new Point(4, 29);
             typeTab.Name = "typeTab";
-            typeTab.Padding = new Padding(3, 2, 3, 2);
-            typeTab.Size = new Size(821, 398);
+            typeTab.Padding = new Padding(3);
+            typeTab.Size = new Size(939, 535);
             typeTab.TabIndex = 1;
             typeTab.Text = "Types";
             typeTab.UseVisualStyleBackColor = true;
             // 
-            // tyoeList
+            // typeMainPanel
             // 
-            tyoeList.FormattingEnabled = true;
-            tyoeList.ItemHeight = 15;
-            tyoeList.Location = new Point(573, 4);
-            tyoeList.Margin = new Padding(3, 2, 3, 2);
-            tyoeList.Name = "tyoeList";
-            tyoeList.Size = new Size(243, 394);
-            tyoeList.TabIndex = 0;
+            typeMainPanel.Dock = DockStyle.Fill;
+            typeMainPanel.Location = new Point(3, 37);
+            typeMainPanel.Name = "typeMainPanel";
+            typeMainPanel.Size = new Size(933, 495);
+            typeMainPanel.TabIndex = 1;
+            // 
+            // typePanel
+            // 
+            typePanel.Controls.Add(btnRemoveType);
+            typePanel.Controls.Add(btnUpdateType);
+            typePanel.Controls.Add(btnAddType);
+            typePanel.Dock = DockStyle.Top;
+            typePanel.Location = new Point(3, 3);
+            typePanel.Name = "typePanel";
+            typePanel.Size = new Size(933, 34);
+            typePanel.TabIndex = 0;
             // 
             // serverTab
             // 
-            serverTab.Location = new Point(4, 24);
-            serverTab.Margin = new Padding(3, 2, 3, 2);
+            serverTab.Location = new Point(4, 29);
             serverTab.Name = "serverTab";
-            serverTab.Size = new Size(821, 398);
+            serverTab.Size = new Size(939, 535);
             serverTab.TabIndex = 2;
             serverTab.Text = "Server";
             serverTab.UseVisualStyleBackColor = true;
             // 
+            // btnAddType
+            // 
+            btnAddType.Location = new Point(12, 3);
+            btnAddType.Name = "btnAddType";
+            btnAddType.Size = new Size(94, 29);
+            btnAddType.TabIndex = 0;
+            btnAddType.Text = "Add";
+            btnAddType.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdateType
+            // 
+            btnUpdateType.Location = new Point(112, 3);
+            btnUpdateType.Name = "btnUpdateType";
+            btnUpdateType.Size = new Size(94, 29);
+            btnUpdateType.TabIndex = 1;
+            btnUpdateType.Text = "Update";
+            btnUpdateType.UseVisualStyleBackColor = true;
+            // 
+            // btnRemoveType
+            // 
+            btnRemoveType.Location = new Point(212, 3);
+            btnRemoveType.Name = "btnRemoveType";
+            btnRemoveType.Size = new Size(94, 29);
+            btnRemoveType.TabIndex = 2;
+            btnRemoveType.Text = "Remove";
+            btnRemoveType.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(842, 436);
+            ClientSize = new Size(962, 581);
             Controls.Add(tab);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 2, 3, 2);
             Name = "MainForm";
             Text = "MainForm";
             Load += MainForm_Load;
             tab.ResumeLayout(false);
-            equestTab.ResumeLayout(false);
-            equestTab.PerformLayout();
             typeTab.ResumeLayout(false);
+            typePanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -149,11 +151,12 @@
 
         private TabControl tab;
         private TabPage equestTab;
-        private ListBox requestList;
         private TabPage typeTab;
         private TabPage serverTab;
-        private Label label1;
-        private TextBox textBox1;
-        private ListBox tyoeList;
+        private Panel typePanel;
+        private Panel typeMainPanel;
+        private Button btnRemoveType;
+        private Button btnUpdateType;
+        private Button btnAddType;
     }
 }

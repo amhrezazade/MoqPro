@@ -26,25 +26,22 @@ namespace MoqProWinUi.Forms
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
             Text = "MOQ PRO version " + fvi.FileVersion;
+            tab.Dock = DockStyle.Fill;
 
-            ObjectListView objectListView = new ObjectListView();
-            objectListView.Size = new Size(400, 400);
-
-            var moq = DataType.GetMOQ();
-            
-            OLVColumn nameColumn = new OLVColumn();
-            objectListView.AllColumns.Add(nameColumn);
-            ((ISupportInitialize)(objectListView)).BeginInit();
-            objectListView.Columns.AddRange([
-                nameColumn,
-            ]);
-            objectListView.SetObjects(moq.Select(x => new
+            var moq = DataType.GetMOQ().Select(x => new DataTypeViewModel()
             {
-                x.Name
-            }));
+                Name = x.Name,
+                Description = x.Description,
+            }).ToList();
+
+            ObjectListView objectListView = 
+                ListViewMaker.CreateListView(moq);
+
+            objectListView.Size = new Size(400, 400);
+            objectListView.Dock = DockStyle.Fill;
 
 
-            typeTab.Controls.Add(objectListView);
+            typeMainPanel.Controls.Add(objectListView);
         }
     }
 }
