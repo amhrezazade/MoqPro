@@ -2,41 +2,35 @@
 
 namespace MoqProDomain.Service;
 
-public class RequestHandlerService
+public class RequestHandlerService(DataService dataService)
 {
-    private readonly DataService _dataService;
     private static readonly Random _random = new();
-    public RequestHandlerService(DataService dataService)
-    {
-        _dataService = dataService;
-    }
 
     public bool CanHandlePath(string path)
     {
-        return !path.StartsWith("/api", StringComparison.OrdinalIgnoreCase)
-               && _dataService.GetAllRequests().Any(r => string.Equals(r.Path, path, StringComparison.OrdinalIgnoreCase));
+        return dataService.GetAllRequests().Any(r => string.Equals(r.Path, path, StringComparison.OrdinalIgnoreCase));
     }
 
-    public object? Handle(string path)
+    public object Handle(string path)
     {
         var request = FindMatchingRequest(path);
         if (request == null) return null;
 
-        var outputType = _dataService.GetDataTypeById(request.OutputBodyType);
+        var outputType = dataService.GetDataTypeById(request.OutputBodyType);
         if (outputType == null) return null;
 
         return GenerateMockObject(outputType);
     }
 
-    private Request? FindMatchingRequest(string path)
+    private Request FindMatchingRequest(string path)
     {
-        return _dataService.GetAllRequests()
+        return dataService.GetAllRequests()
             .FirstOrDefault(r => string.Equals(r.Path, path, StringComparison.OrdinalIgnoreCase));
     }
 
-    private object? GenerateMockObject(DataType dataType)
+    private object GenerateMockObject(DataType dataType)
     {
-        var result = new Dictionary<string, object?>();
+        var result = new Dictionary<string, object>();
 
         foreach (var prop in dataType.Properties)
         {
@@ -46,13 +40,13 @@ public class RequestHandlerService
         return result;
     }
 
-    private object? GenerateMockValue(DataTypeProperty property)
+    private object GenerateMockValue(DataTypeProperty property)
     {
         if (property.IsList)
         {
 
             int count = _random.Next(2, 5); // Generates 2 to 4 items
-            var list = new List<object?>();
+            var list = new List<object>();
 
             for (int i = 0; i < count; i++)
             {
@@ -67,7 +61,7 @@ public class RequestHandlerService
         }
     }
 
-    private object? GeneratePrimitiveOrObject(DataTypeProperty prop)
+    private object GeneratePrimitiveOrObject(DataTypeProperty prop)
     {
         switch (prop.Nature)
         {
@@ -86,7 +80,7 @@ public class RequestHandlerService
             case DataTypeNature.Object:
                 if (prop.DataTypeNatureId.HasValue)
                 {
-                    var refType = _dataService.GetDataTypeById(prop.DataTypeNatureId.Value);
+                    var refType = dataService.GetDataTypeById(prop.DataTypeNatureId.Value);
                     if (refType != null)
                         return GenerateMockObject(refType);
                 }

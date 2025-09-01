@@ -7,6 +7,10 @@ public class DataType
     public string Description { get; set; }
     public List<DataTypeProperty> Properties { get; set; }
 
+    public override string ToString()
+    {
+        return Name;
+    }
     public static List<DataType> GetMOQ()
     {
         return new List<DataType>

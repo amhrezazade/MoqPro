@@ -34,12 +34,11 @@
             // 
             // lblInfo
             // 
-            lblInfo.AutoSize = true;
             lblInfo.BackColor = Color.Transparent;
             lblInfo.ForeColor = Color.White;
             lblInfo.Location = new Point(89, 341);
             lblInfo.Name = "lblInfo";
-            lblInfo.Size = new Size(72, 20);
+            lblInfo.Size = new Size(194, 86);
             lblInfo.TabIndex = 0;
             lblInfo.Text = "Loading...";
             // 
@@ -53,11 +52,13 @@
             Controls.Add(lblInfo);
             FormBorderStyle = FormBorderStyle.None;
             Name = "StartupForm";
+            Opacity = 0.8D;
+            ShowIcon = false;
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "StartupForm";
             Load += StartupForm_Load;
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
