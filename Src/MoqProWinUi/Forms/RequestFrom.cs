@@ -1,13 +1,4 @@
 ﻿using MoqProDomain.Entity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MoqProWinUi.Forms
 {
@@ -26,6 +17,7 @@ namespace MoqProWinUi.Forms
 
         private void RequestFrom_Load(object sender, EventArgs e)
         {
+            
             comMethod.Items.Clear();
             comMethod.Items.Add("GET");
             comMethod.Items.Add("POST");
@@ -35,6 +27,10 @@ namespace MoqProWinUi.Forms
             comOutput.DataSource = _types;
             comQuery.DataSource = _types;
             comBody.DataSource = _types;
+
+            comOutput.DropDownStyle = ComboBoxStyle.DropDownList;
+            comQuery.DropDownStyle = ComboBoxStyle.DropDownList;
+            comBody.DropDownStyle = ComboBoxStyle.DropDownList;
 
             comMethod.Text = _request.Method;
             txtRout.Text = _request.Path;

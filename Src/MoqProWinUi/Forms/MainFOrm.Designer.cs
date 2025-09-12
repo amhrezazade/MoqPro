@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tab = new TabControl();
             equestTab = new TabPage();
             requestListPanel = new Panel();
             lstRequests = new ListBox();
             panel3 = new Panel();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            btnRemoveRequest = new Button();
+            btnUpdateRequest = new Button();
+            btnAddRequest = new Button();
             typeTab = new TabPage();
             typeMainPanel = new Panel();
             lstTypes = new ListBox();
@@ -50,6 +51,7 @@
             panel2 = new Panel();
             lblServerState = new Label();
             btnServer = new Button();
+            timer = new System.Windows.Forms.Timer(components);
             tab.SuspendLayout();
             equestTab.SuspendLayout();
             requestListPanel.SuspendLayout();
@@ -96,49 +98,51 @@
             // 
             // lstRequests
             // 
+            lstRequests.Font = new Font("Segoe UI", 11F);
             lstRequests.FormattingEnabled = true;
-            lstRequests.Location = new Point(22, 6);
+            lstRequests.ItemHeight = 25;
+            lstRequests.Location = new Point(39, 17);
             lstRequests.Name = "lstRequests";
             lstRequests.Size = new Size(150, 104);
             lstRequests.TabIndex = 0;
             // 
             // panel3
             // 
-            panel3.Controls.Add(button1);
-            panel3.Controls.Add(button2);
-            panel3.Controls.Add(button3);
+            panel3.Controls.Add(btnRemoveRequest);
+            panel3.Controls.Add(btnUpdateRequest);
+            panel3.Controls.Add(btnAddRequest);
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(3, 3);
             panel3.Name = "panel3";
             panel3.Size = new Size(519, 40);
             panel3.TabIndex = 1;
             // 
-            // button1
+            // btnRemoveRequest
             // 
-            button1.Location = new Point(212, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 2;
-            button1.Text = "Remove";
-            button1.UseVisualStyleBackColor = true;
+            btnRemoveRequest.Location = new Point(212, 3);
+            btnRemoveRequest.Name = "btnRemoveRequest";
+            btnRemoveRequest.Size = new Size(94, 29);
+            btnRemoveRequest.TabIndex = 2;
+            btnRemoveRequest.Text = "Remove";
+            btnRemoveRequest.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnUpdateRequest
             // 
-            button2.Location = new Point(112, 3);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 1;
-            button2.Text = "Update";
-            button2.UseVisualStyleBackColor = true;
+            btnUpdateRequest.Location = new Point(112, 3);
+            btnUpdateRequest.Name = "btnUpdateRequest";
+            btnUpdateRequest.Size = new Size(94, 29);
+            btnUpdateRequest.TabIndex = 1;
+            btnUpdateRequest.Text = "Update";
+            btnUpdateRequest.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnAddRequest
             // 
-            button3.Location = new Point(12, 3);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 29);
-            button3.TabIndex = 0;
-            button3.Text = "Add";
-            button3.UseVisualStyleBackColor = true;
+            btnAddRequest.Location = new Point(12, 3);
+            btnAddRequest.Name = "btnAddRequest";
+            btnAddRequest.Size = new Size(94, 29);
+            btnAddRequest.TabIndex = 0;
+            btnAddRequest.Text = "Add";
+            btnAddRequest.UseVisualStyleBackColor = true;
             // 
             // typeTab
             // 
@@ -163,7 +167,9 @@
             // 
             // lstTypes
             // 
+            lstTypes.Font = new Font("Segoe UI", 11F);
             lstTypes.FormattingEnabled = true;
+            lstTypes.ItemHeight = 25;
             lstTypes.Location = new Point(35, 22);
             lstTypes.Name = "lstTypes";
             lstTypes.Size = new Size(150, 104);
@@ -197,6 +203,7 @@
             btnUpdateType.TabIndex = 1;
             btnUpdateType.Text = "Update";
             btnUpdateType.UseVisualStyleBackColor = true;
+            btnUpdateType.Click += btnUpdateType_Click;
             // 
             // btnAddType
             // 
@@ -206,6 +213,7 @@
             btnAddType.TabIndex = 0;
             btnAddType.Text = "Add";
             btnAddType.UseVisualStyleBackColor = true;
+            btnAddType.Click += btnAddType_Click;
             // 
             // serverTab
             // 
@@ -267,11 +275,17 @@
             btnServer.Text = "Start Server";
             btnServer.UseVisualStyleBackColor = true;
             // 
+            // timer
+            // 
+            timer.Enabled = true;
+            timer.Interval = 500;
+            timer.Tick += timer_Tick;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(656, 457);
+            ClientSize = new Size(591, 373);
             Controls.Add(tab);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
@@ -311,10 +325,11 @@
         private TextBox txtLog;
         private Panel requestListPanel;
         private Panel panel3;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button btnRemoveRequest;
+        private Button btnUpdateRequest;
+        private Button btnAddRequest;
         private ListBox lstRequests;
         private ListBox lstTypes;
+        private System.Windows.Forms.Timer timer;
     }
 }

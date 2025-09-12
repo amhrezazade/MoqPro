@@ -1,22 +1,24 @@
 ﻿using MoqProDomain.Entity;
+using MoqProDomain.Model;
 
 namespace MoqProDomain.Service;
 
 public class RequestHandlerService(DataService dataService)
 {
+    private readonly DatabaseModel _db = dataService.DataBase;
     private static readonly Random _random = new();
 
     public bool CanHandlePath(string path)
     {
-        return dataService.GetAllRequests().Any(r => string.Equals(r.Path, path, StringComparison.OrdinalIgnoreCase));
+        return dataService.DataBase.Requests.Any(r => string.Equals(r.Path, path, StringComparison.OrdinalIgnoreCase));
     }
 
-    public object Handle(string path)
+    public object Handle(string path, string method)
     {
         var request = FindMatchingRequest(path);
         if (request == null) return null;
 
-        var outputType = dataService.GetDataTypeById(request.OutputBodyType);
+        var outputType = _db.DataTypes.FirstOrDefault(x => x.Id == request.OutputBodyType);
         if (outputType == null) return null;
 
         return GenerateMockObject(outputType);
@@ -24,55 +26,60 @@ public class RequestHandlerService(DataService dataService)
 
     private Request FindMatchingRequest(string path)
     {
-        return dataService.GetAllRequests()
+        return _db.Requests
             .FirstOrDefault(r => string.Equals(r.Path, path, StringComparison.OrdinalIgnoreCase));
     }
 
-    private object GenerateMockObject(DataType dataType)
+    public object GenerateMockObject(DataType dataType,int callDepth = 0)
     {
+        if (callDepth > 3)
+            return null;
+
         var result = new Dictionary<string, object>();
 
         foreach (var prop in dataType.Properties)
         {
-            result[prop.Name] = GenerateMockValue(prop);
+            result[prop.Name] = GenerateMockValue(prop, callDepth);
         }
 
         return result;
     }
 
-    private object GenerateMockValue(DataTypeProperty property)
+    private object GenerateMockValue(DataTypeProperty property, int callDepth)
     {
         if (property.IsList)
         {
 
-            int count = _random.Next(2, 5); // Generates 2 to 4 items
+            int count = _random.Next(property.MinLen, property.MaxLen); 
             var list = new List<object>();
 
             for (int i = 0; i < count; i++)
             {
-                list.Add(GeneratePrimitiveOrObject(property));
+                list.Add(GeneratePrimitiveOrObject(property, callDepth));
             }
 
             return list;
         }
         else
         {
-            return GeneratePrimitiveOrObject(property);
+            return GeneratePrimitiveOrObject(property,callDepth);
         }
     }
 
-    private object GeneratePrimitiveOrObject(DataTypeProperty prop)
+    private object GeneratePrimitiveOrObject(DataTypeProperty prop, int callDepth)
     {
+        if(prop.MinLen > prop.MaxLen)
+            prop.MinLen = prop.MaxLen;
         switch (prop.Nature)
         {
             case DataTypeNature.String:
-                return GenerateRandomString(8);
+                return GenerateRandomString(prop.MinLen,prop.MaxLen);
 
             case DataTypeNature.Int:
-                return _random.Next(1, 1000);
+                return _random.Next(prop.MinLen, prop.MaxLen);
 
             case DataTypeNature.Double:
-                return Math.Round(_random.NextDouble() * 1000, 2);
+                return Math.Round(_random.NextDouble() * _random.Next(prop.MinLen, prop.MaxLen), 2);
 
             case DataTypeNature.DateTime:
                 return GenerateRandomDate();
@@ -80,9 +87,9 @@ public class RequestHandlerService(DataService dataService)
             case DataTypeNature.Object:
                 if (prop.DataTypeNatureId.HasValue)
                 {
-                    var refType = dataService.GetDataTypeById(prop.DataTypeNatureId.Value);
+                    var refType = _db.DataTypes.FirstOrDefault(x => x.Id == prop.DataTypeNatureId.Value);
                     if (refType != null)
-                        return GenerateMockObject(refType);
+                        return GenerateMockObject(refType, callDepth + 1);
                 }
                 return null;
 
@@ -91,10 +98,10 @@ public class RequestHandlerService(DataService dataService)
         }
     }
 
-    private string GenerateRandomString(int length)
+    private string GenerateRandomString(int min,int max)
     {
-        const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-        return new string(Enumerable.Repeat(chars, length)
+        const string chars = " ab cde fgh ijk lmn pq rs tuvw xy z01 2345 6789";
+        return new string(Enumerable.Repeat(chars, _random.Next(min,max))
             .Select(s => s[_random.Next(s.Length)]).ToArray());
     }
 

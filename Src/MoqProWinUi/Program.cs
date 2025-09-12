@@ -18,8 +18,11 @@ public static class Program
     public static void Main()
     {
         ApplicationConfiguration.Initialize();
-        if(InitObjects())
+        if (InitObjects())
+        {
             Application.Run(MainForm);
+            DataService.Save();
+        }
     }
 
 
@@ -28,9 +31,6 @@ public static class Program
         LogService = new LogService();
         var startupForm = new StartupForm();
         startupForm.Show();
-
-        LogService.Trace("loading main window");
-        MainForm = new MainForm();
 
         LogService.Trace("loading config");
         try
@@ -45,9 +45,10 @@ public static class Program
         }
 
         LogService.Trace("loading data");
+        DataService = new DataService();
         try
         {
-            DataService = new DataService();
+            DataService.Init();
         }
         catch(Exception ex)
         {
@@ -55,8 +56,8 @@ public static class Program
             return false;
         }
 
-
-
+        LogService.Trace("loading main window");
+        MainForm = new MainForm();
 
         //Thread.Sleep(1000);
         LogService.LogTrace = AppConfig.Trace;

@@ -13,7 +13,7 @@ public class MainMiddleware(RequestDelegate next, RequestHandlerService handler)
 
         if (handler.CanHandlePath(path))
         {
-            var response = handler.Handle(path);
+            var response = handler.Handle(path,context.Request.Method.ToString());
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(response, Formatting.Indented));
         }

@@ -88,7 +88,7 @@ namespace MoqProWinUi.Forms
         private string HandleRequest(string method, string path, string body, Dictionary<string, string> queryParams)
         {
             // we just need path 
-            object result = _service.Handle(path);
+            object result = _service.Handle(path, method);
             return JsonConvert.SerializeObject(result);
         }
 
